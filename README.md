@@ -2,6 +2,8 @@
 
 A Laravel 5.2 package to sort Eloquent models.
 
+[![Build Status](https://travis-ci.org/leparking/eloquent-sortable.svg)](https://travis-ci.org/leparking/eloquent-sortable)
+
 * [Installation](#installation)
 * [Configuration](#configuration)
 * [Usage](#usage)
