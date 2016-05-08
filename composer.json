@@ -1,0 +1,25 @@
+{
+    "name": "leparking/eloquent-sortable",
+    "description": "Laravel package to sort Eloquent models",
+    "keywords": ["laravel", "eloquent", "sortable"],
+    "license": "MIT",
+    "homepage": "https://github.com/leparking/eloquent-sortable",
+    "require": {
+        "php": ">=5.5.9",
+        "illuminate/database": "~5.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0",
+        "orchestra/testbench": "~3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "LeParking\\EloquentSortable\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LeParking\\EloquentSortable\\Tests\\": "tests/"
+        }
+    }
+}
