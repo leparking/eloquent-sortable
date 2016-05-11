@@ -14,12 +14,12 @@
     },
     "autoload": {
         "psr-4": {
-            "LeParking\\EloquentSortable\\": "src/"
+            "LeParking\\Sortable\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "LeParking\\EloquentSortable\\Tests\\": "tests/"
+            "LeParking\\Sortable\\Tests\\": "tests/"
         }
     }
 }

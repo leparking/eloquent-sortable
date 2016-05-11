@@ -1,6 +1,6 @@
 <?php
 
-namespace LeParking\EloquentSortable\Tests;
+namespace LeParking\Sortable\Tests;
 
 use Orchestra\Testbench\TestCase;
 
@@ -31,7 +31,7 @@ class SortableTest extends TestCase
 
     protected function getPackageProviders($app)
     {
-        return ['LeParking\EloquentSortable\SortableServiceProvider'];
+        return ['LeParking\Sortable\SortableServiceProvider'];
     }
 
     public function testSetPositionWhenCreating()

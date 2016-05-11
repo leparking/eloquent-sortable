@@ -1,6 +1,6 @@
 <?php
 
-namespace LeParking\EloquentSortable\Tests\Models;
+namespace LeParking\Sortable\Tests\Models;
 
 class SortableGroupBy extends Sortable
 {

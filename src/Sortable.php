@@ -1,6 +1,6 @@
 <?php
 
-namespace LeParking\EloquentSortable;
+namespace LeParking\Sortable;
 
 interface Sortable
 {

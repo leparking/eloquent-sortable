@@ -35,7 +35,7 @@ Add the service provider to `config/app.php`
 ```php
     'providers' => [
         // ...
-        LeParking\EloquentSortable\SortableServiceProvider::class,
+        LeParking\Sortable\SortableServiceProvider::class,
     ],
 ```
 
@@ -78,8 +78,8 @@ Your sortable models should implement the `Sortable` interface and use the `Sort
 
 ```php
 use Illuminate\Database\Eloquent\Model;
-use LeParking\EloquentSortable\Sortable;
-use LeParking\EloquentSortable\SortableTrait;
+use LeParking\Sortable\Sortable;
+use LeParking\Sortable\SortableTrait;
 
 class Book extends Model implements Sortable
 {

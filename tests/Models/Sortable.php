@@ -1,10 +1,10 @@
 <?php
 
-namespace LeParking\EloquentSortable\Tests\Models;
+namespace LeParking\Sortable\Tests\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use LeParking\EloquentSortable\Sortable as SortableInterface;
-use LeParking\EloquentSortable\SortableTrait;
+use LeParking\Sortable\Sortable as SortableInterface;
+use LeParking\Sortable\SortableTrait;
 
 class Sortable extends Model implements SortableInterface
 {
