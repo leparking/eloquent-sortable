@@ -11,19 +11,6 @@ A Laravel 5.2 package to sort Eloquent models.
 
 ## Installation
 
-Add the git repository at the root of your `composer.json` file
-
-```json
-{
-    "repositories": [
-        {
-            "url": "https://github.com/leparking/laravel-sortable.git",
-            "type": "git"
-        }
-    ],
-}
-```
-
 Require the package with composer
 
 ```sh
