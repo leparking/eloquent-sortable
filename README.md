@@ -7,6 +7,7 @@ A Laravel 5.2 package to sort Eloquent models.
 * [Installation](#installation)
 * [Configuration](#configuration)
 * [Usage](#usage)
+* [Similar Packages](#similar-packages)
 
 ## Installation
 
@@ -14,14 +15,12 @@ Add the git repository at the root of your `composer.json` file
 
 ```json
 {
-    ...
     "repositories": [
         {
             "url": "https://github.com/leparking/eloquent-sortable.git",
             "type": "git"
         }
     ],
-    ...
 }
 ```
 
@@ -51,7 +50,7 @@ php artisan vendor:publish
 The settings in this file will apply to all sortable models, but can be
 overridden on each model with the `$sortable` property.
 
-Here is the available settings with their defaults:
+Here are the available settings with their defaults:
 
 ```php
 return [
@@ -119,3 +118,9 @@ position column.
 $books = Book::ordered();
 $books = Book::ordered('desc');
 ```
+
+## Similar Packages
+
+* [spatie/eloquent-sortable](https://github.com/spatie/eloquent-sortable)
+* [lookitsatravis/listify](https://github.com/lookitsatravis/listify)
+* [boxfrommars/rutorika-sortable](https://github.com/boxfrommars/rutorika-sortable)
