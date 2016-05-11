@@ -2,7 +2,7 @@
 
 /**
  * Configuration for the sortable package.
- * https://github.com/leparking/eloquent-sortable
+ * https://github.com/leparking/laravel-sortable
  */
 return [
     /**

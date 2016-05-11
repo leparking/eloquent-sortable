@@ -1,8 +1,8 @@
-# Eloquent Sortable
+# Laravel Sortable
 
 A Laravel 5.2 package to sort Eloquent models.
 
-[![Build Status](https://travis-ci.org/leparking/eloquent-sortable.svg)](https://travis-ci.org/leparking/eloquent-sortable)
+[![Build Status](https://travis-ci.org/leparking/laravel-sortable.svg)](https://travis-ci.org/leparking/laravel-sortable)
 
 * [Installation](#installation)
 * [Configuration](#configuration)
@@ -17,7 +17,7 @@ Add the git repository at the root of your `composer.json` file
 {
     "repositories": [
         {
-            "url": "https://github.com/leparking/eloquent-sortable.git",
+            "url": "https://github.com/leparking/laravel-sortable.git",
             "type": "git"
         }
     ],
@@ -27,7 +27,7 @@ Add the git repository at the root of your `composer.json` file
 Require the package with composer
 
 ```sh
-composer require leparking/eloquent-sortable
+composer require leparking/laravel-sortable
 ```
 
 Add the service provider to `config/app.php`

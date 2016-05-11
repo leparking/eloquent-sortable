@@ -1,9 +1,9 @@
 {
-    "name": "leparking/eloquent-sortable",
+    "name": "leparking/laravel-sortable",
     "description": "Laravel package to sort Eloquent models",
     "keywords": ["laravel", "eloquent", "sortable"],
     "license": "MIT",
-    "homepage": "https://github.com/leparking/eloquent-sortable",
+    "homepage": "https://github.com/leparking/laravel-sortable",
     "require": {
         "php": ">=5.5.9",
         "illuminate/database": "~5.2"
