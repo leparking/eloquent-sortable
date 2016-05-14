@@ -35,13 +35,11 @@ trait SortableTrait
      */
     public function sortableDeleted()
     {
-        if ($this->shouldReorderOnDelete()) {
-            $column = $this->getSortableColumn();
+        $column = $this->getSortableColumn();
 
-            $this->sortableQuery()
-                ->where($column, '>', $this->getPosition())
-                ->decrement($column);
-        }
+        $this->sortableQuery()
+            ->where($column, '>', $this->getPosition())
+            ->decrement($column);
     }
 
     /**
@@ -143,16 +141,6 @@ trait SortableTrait
     protected function shouldInsertFirst()
     {
         return $this->getSortableConfig('insert_first');
-    }
-
-    /**
-     * Determine whether other sortables are reordered when deleting a sortable.
-     *
-     * @return bool
-     */
-    protected function shouldReorderOnDelete()
-    {
-        return $this->getSortableConfig('reorder_on_delete');
     }
 
     /**
