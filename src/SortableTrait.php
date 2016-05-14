@@ -14,9 +14,7 @@ trait SortableTrait
      */
     public function sortableCreating()
     {
-        if ($this->shouldSortOnCreate()) {
-            $this->setNextPosition();
-        }
+        $this->setNextPosition();
     }
 
     /**
@@ -25,7 +23,7 @@ trait SortableTrait
      */
     public function sortableCreated()
     {
-        if ($this->shouldInsertFirst() && $this->shouldSortOnCreate()) {
+        if ($this->shouldInsertFirst()) {
             $this->sortableQuery()
                 ->where($this->getKeyName(), '!=', $this->getKey())
                 ->increment($this->getSortableColumn());
@@ -135,16 +133,6 @@ trait SortableTrait
     protected function getSortableColumn()
     {
         return $this->getSortableConfig('column');
-    }
-
-    /**
-     * Determine whether new sortables should be sorted automatically.
-     *
-     * @return bool
-     */
-    protected function shouldSortOnCreate()
-    {
-        return $this->getSortableConfig('sort_on_create');
     }
 
     /**

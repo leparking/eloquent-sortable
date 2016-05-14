@@ -44,10 +44,6 @@ return [
      // Name of the column that will store the position.
     'column' => 'position',
 
-     // Determine whether the position should be set automatically when creating
-     // new sortable models.
-    'sort_on_create' => true,
-
      // Determine if other models should be reordered when deleting a sortable model.
     'reorder_on_delete' => true,
 
