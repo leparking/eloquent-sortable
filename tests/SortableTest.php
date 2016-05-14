@@ -130,6 +130,53 @@ class SortableTest extends TestCase
         $sortables = factory(Models\SortableGroupBy::class, 5)->create();
     }
 
+    public function testChangingGroup()
+    {
+        $group1 = factory(Models\SortableGroupBy::class, 3)->create([
+            'group' => 1,
+        ]);
+
+        $group2 = factory(Models\SortableGroupBy::class, 3)->create([
+            'group' => 2,
+        ]);
+
+        $group1->first()->update(['group' => 2]);
+
+        $group2->push($group1->first());
+        $group1->splice(0, 1);
+
+        foreach ($group1 as $i => $sortable) {
+            $this->assertEquals($i + 1, $sortable->fresh()->position);
+        }
+
+        foreach ($group2 as $i => $sortable) {
+            $this->assertEquals($i + 1, $sortable->fresh()->position);
+        }
+    }
+
+    public function testChangingGroupInsertedFirst()
+    {
+        for ($i = 1; $i <= 2; $i++) {
+            factory(Models\SortableInsertFirst::class, 5)->create(['group' => $i]);
+            ${"group$i"} = Models\SortableInsertFirst::where('group', $i)->ordered()->get();
+        }
+
+        $sortable = $group1[2];
+        $sortable->update(['group' => 2]);
+        $this->assertEquals(1, $sortable->fresh()->position);
+
+        $group2->prepend($sortable);
+        $group1->splice(2, 1);
+
+        foreach ($group1 as $i => $sortable) {
+            $this->assertEquals($i + 1, $sortable->fresh()->position);
+        }
+
+        foreach ($group2 as $i => $sortable) {
+            $this->assertEquals($i + 1, $sortable->fresh()->position);
+        }
+    }
+
     public function testScopeOrdered()
     {
         factory(Models\SortableInsertFirst::class, 5)->create();

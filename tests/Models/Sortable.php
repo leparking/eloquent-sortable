@@ -13,4 +13,6 @@ class Sortable extends Model implements SortableInterface
     protected $table = 'sortables';
 
     public $timestamps = false;
+
+    protected $fillable = ['name', 'position', 'sort', 'group'];
 }

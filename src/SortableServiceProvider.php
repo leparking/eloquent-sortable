@@ -20,7 +20,7 @@ class SortableServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $events = ['creating', 'created', 'deleted'];
+        $events = ['creating', 'created', 'updating', 'updated', 'deleted'];
 
         foreach ($events as $event) {
             $this->app['events']->listen("eloquent.$event*", function ($model) use ($event) {

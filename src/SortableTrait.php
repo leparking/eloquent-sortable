@@ -3,6 +3,7 @@
 namespace LeParking\Sortable;
 
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Arr;
 
 /**
  * Trait that adds sortable behaviour to Eloquent models.
@@ -24,9 +25,33 @@ trait SortableTrait
     public function sortableCreated()
     {
         if ($this->shouldInsertFirst()) {
-            $this->sortableQuery()
-                ->where($this->getKeyName(), '!=', $this->getKey())
-                ->increment($this->getSortableColumn());
+            $this->incrementOthersPositions();
+        }
+    }
+
+    /**
+     * Update the position when changing one of the group_by columns.
+     */
+    public function sortableUpdating()
+    {
+        if ($this->hasSortableGroupChanged()) {
+            $this->setNextPosition();
+        }
+    }
+
+    /**
+     * Reorder the other sortables when one of the group_by columns have changed.
+     */
+    public function sortableUpdated()
+    {
+        if (!$this->hasSortableGroupChanged()) {
+            return;
+        }
+
+        $this->decrementAbovePosition($this->getOriginalPosition(), $this->getOriginal());
+
+        if ($this->shouldInsertFirst()) {
+            $this->incrementOthersPositions();
         }
     }
 
@@ -35,11 +60,7 @@ trait SortableTrait
      */
     public function sortableDeleted()
     {
-        $column = $this->getSortableColumn();
-
-        $this->sortableQuery()
-            ->where($column, '>', $this->getPosition())
-            ->decrement($column);
+        $this->decrementAbovePosition();
     }
 
     /**
@@ -92,6 +113,55 @@ trait SortableTrait
     }
 
     /**
+     * Get the sortable old / original position
+     *
+     * @return int
+     */
+    public function getOriginalPosition() {
+        return $this->getOriginal($this->getSortableColumn());
+    }
+
+    /**
+     * Increment the position of all sortables.
+     *
+     * @param mixed $except The primary key of a sortable that won't be incremented.
+     */
+    protected function incrementPositions($except = null)
+    {
+        $query = $this->sortableQuery();
+
+        if ($except) {
+            $query->where($this->getKeyName(), '!=', $except);
+        }
+
+        return $query->increment($this->getSortableColumn());
+    }
+
+    /**
+     * Increment positions of all others sortables.
+     */
+    protected function incrementOthersPositions()
+    {
+        $this->incrementPositions($this->getKey());
+    }
+
+    /**
+     * Decrement positions of sortables above the given or current position.
+     *
+     * @param int|null $position
+     * @param array $attributes
+     */
+    protected function decrementAbovePosition($position = null, array $attributes = [])
+    {
+        $column = $this->getSortableColumn();
+        $position = $position ?: $this->getPosition();
+
+        $this->sortableQuery($attributes)
+            ->where($column, '>', $position)
+            ->decrement($column);
+    }
+
+    /**
      * A query scope to order sortables by position.
      *
      * @param QueryBuilder $query
@@ -104,23 +174,42 @@ trait SortableTrait
     }
 
     /**
-     * Construct a new query builder for the sortable model.
+     * Construct a new query builder to retrieve sortables in a group.
      *
+     * @param array $attributes an array of group_by values. If empty, the model's attributes will be used.
      * @return QueryBuilder
      */
-    protected function sortableQuery()
+    protected function sortableQuery(array $attributes = [])
     {
         $query = $this->newQuery();
 
-        $group_by = $this->getSortableConfig('group_by');
+        $groups = $this->getSortableGroups();
 
-        foreach ((array) $group_by as $column) {
-            if ($column) {
-                $query->where($column, $this->getAttribute($column));
-            }
+        foreach ($groups as $column) {
+            $value = Arr::get($attributes, $column, $this->getAttribute($column));
+
+            $query->where($column, $value);
         }
 
         return $query;
+    }
+
+    /**
+     * Check if one of the group_by columns has changed.
+     *
+     * @return bool
+     */
+    protected function hasSortableGroupChanged()
+    {
+        $groups = $this->getSortableGroups();
+
+        foreach ($groups as $column) {
+            if ($this->getOriginal($column) !== $this->getAttribute($column)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -131,6 +220,18 @@ trait SortableTrait
     protected function getSortableColumn()
     {
         return $this->getSortableConfig('column');
+    }
+
+    /**
+     * Get the group_by columns in the current config.
+     *
+     * @return array
+     */
+    protected function getSortableGroups()
+    {
+        $group_by = $this->getSortableConfig('group_by');
+
+        return array_filter((array) $group_by);
     }
 
     /**
